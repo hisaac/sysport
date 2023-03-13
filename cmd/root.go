@@ -7,8 +7,10 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/hisaac/sysport/versions"
+	"github.com/hisaac/sysport/Reporter"
 )
+
+const version = "0.0.1"
 
 var cfgFile string
 var Verbose bool
@@ -20,10 +22,10 @@ var rootCmd = &cobra.Command{
 	Use:     "sysport",
 	Short:   "sysport generates a system report",
 	Long:    `sysport generates a system report which can be exported in multiple different formats.`,
-	Version: "0.0.1",
+	Version: version,
 	Run: func(cmd *cobra.Command, args []string) {
-		versions.MacOS.Version()
-		versions.Homebrew.Version()
+		Reporter.MacOS.Version()
+		Reporter.Homebrew.Version()
 	},
 }
 

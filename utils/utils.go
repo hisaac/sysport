@@ -1,7 +1,7 @@
-package versions
+package utils
 
 import "strings"
 
-func trimNewline(str string) string {
+func TrimNewline(str string) string {
 	return strings.TrimRight(str, "\r\n")
 }

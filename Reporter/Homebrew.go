@@ -1,15 +1,22 @@
-package versions
+package Reporter
 
 import (
 	"fmt"
+	"os/exec"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"os/exec"
+
+	. "github.com/hisaac/sysport/utils"
 )
 
 type homebrew struct{}
 
 var Homebrew homebrew
+
+func (h homebrew) Info() {
+	// TODO: Implement this
+}
 
 func (homebrew) Version() {
 	cmd := exec.Command("brew", "--version")
@@ -19,7 +26,7 @@ func (homebrew) Version() {
 
 	out, err := cmd.Output()
 	cobra.CheckErr(err)
-	outStr := trimNewline(string(out))
+	outStr := TrimNewline(string(out))
 
 	if viper.GetBool("verbose") {
 		fmt.Println("Homebrew version:", outStr)

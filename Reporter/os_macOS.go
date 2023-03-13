@@ -1,4 +1,4 @@
-package versions
+package Reporter
 
 import (
 	"fmt"
@@ -6,11 +6,17 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	. "github.com/hisaac/sysport/utils"
 )
 
 type macOS struct{}
 
 var MacOS macOS
+
+func (os macOS) Info() {
+	// TODO: Implement this
+}
 
 func (macOS) Version() {
 	productNameCmd := exec.Command("sw_vers", "-productName")
@@ -19,7 +25,7 @@ func (macOS) Version() {
 	}
 	productName, err := productNameCmd.Output()
 	cobra.CheckErr(err)
-	productNameStr := trimNewline(string(productName))
+	productNameStr := TrimNewline(string(productName))
 
 	productVersionCmd := exec.Command("sw_vers", "-productVersion")
 	if viper.GetBool("debug") {
@@ -27,7 +33,7 @@ func (macOS) Version() {
 	}
 	productVersion, err := productVersionCmd.Output()
 	cobra.CheckErr(err)
-	productVersionStr := trimNewline(string(productVersion))
+	productVersionStr := TrimNewline(string(productVersion))
 
 	buildVersionCmd := exec.Command("sw_vers", "-buildVersion")
 	if viper.GetBool("debug") {
@@ -35,7 +41,7 @@ func (macOS) Version() {
 	}
 	buildVersion, err := buildVersionCmd.Output()
 	cobra.CheckErr(err)
-	buildVersionStr := trimNewline(string(buildVersion))
+	buildVersionStr := TrimNewline(string(buildVersion))
 
 	if viper.GetBool("succinct") {
 		fmt.Println(productVersionStr)
